@@ -7,16 +7,25 @@
 //
 
 #import "AppDelegate.h"
+#import "MainViewController.h"
+#import "MenuViewController.h"
+
 
 @interface AppDelegate ()
+
+@property (nonatomic, strong) YSLeftSlideMenuController *slideVC;
 
 @end
 
 @implementation AppDelegate
-
-
+#pragma mark - life cycle
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     // Override point for customization after application launch.
+    self.window.rootViewController = self.slideVC;
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
@@ -47,5 +56,13 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+#pragma mark - getters
+- (YSLeftSlideMenuController *)slideVC {
+    if (!_slideVC) {
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[MainViewController new]];
+        _slideVC = [[YSLeftSlideMenuController alloc] initWithMainVC:nav leftMenuVC:[MenuViewController new]];
+    }
+    return _slideVC;
+}
 
 @end
